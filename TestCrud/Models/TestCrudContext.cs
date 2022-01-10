@@ -26,6 +26,8 @@ namespace TestCrud.Models
         public virtual DbSet<TRol> TRol { get; set; }
         public virtual DbSet<TUsers> TUsers { get; set; }
         public virtual DbSet<TVenta> TVenta { get; set; }
+        public virtual DbSet<TdetalleAlquiler> TdetalleAlquiler { get; set; }
+        public virtual DbSet<TdetalleVenta> TdetalleVenta { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,13 +43,11 @@ namespace TestCrud.Models
             modelBuilder.Entity<TAlquiler>(entity =>
             {
                 entity.HasKey(e => e.CodAlquiler)
-                    .HasName("PK__tAlquile__28866C2C66A6EA37");
+                    .HasName("PK__tAlquile__28866C2CAB00E070");
 
                 entity.ToTable("tAlquiler");
 
                 entity.Property(e => e.CodAlquiler).HasColumnName("cod_alquiler");
-
-                entity.Property(e => e.CodPelicula).HasColumnName("cod_pelicula");
 
                 entity.Property(e => e.CodUsuario).HasColumnName("cod_usuario");
 
@@ -55,18 +55,9 @@ namespace TestCrud.Models
                     .HasColumnName("fecha")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.FechaDevolucion)
-                    .HasColumnName("fechaDevolucion")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Precio)
-                    .HasColumnName("precio")
+                entity.Property(e => e.Total)
+                    .HasColumnName("total")
                     .HasColumnType("numeric(18, 2)");
-
-                entity.HasOne(d => d.CodPeliculaNavigation)
-                    .WithMany(p => p.TAlquiler)
-                    .HasForeignKey(d => d.CodPelicula)
-                    .HasConstraintName("fk_cod_peliculaAlquiler");
 
                 entity.HasOne(d => d.CodUsuarioNavigation)
                     .WithMany(p => p.TAlquiler)
@@ -204,13 +195,11 @@ namespace TestCrud.Models
             modelBuilder.Entity<TVenta>(entity =>
             {
                 entity.HasKey(e => e.CodVenta)
-                    .HasName("PK__tVenta__27326095CFD14AF0");
+                    .HasName("PK__tVenta__27326095C98CB786");
 
                 entity.ToTable("tVenta");
 
                 entity.Property(e => e.CodVenta).HasColumnName("cod_venta");
-
-                entity.Property(e => e.CodPelicula).HasColumnName("cod_pelicula");
 
                 entity.Property(e => e.CodUsuario).HasColumnName("cod_usuario");
 
@@ -218,19 +207,82 @@ namespace TestCrud.Models
                     .HasColumnName("fecha")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Precio)
-                    .HasColumnName("precio")
+                entity.Property(e => e.Total)
+                    .HasColumnName("total")
                     .HasColumnType("numeric(18, 2)");
-
-                entity.HasOne(d => d.CodPeliculaNavigation)
-                    .WithMany(p => p.TVenta)
-                    .HasForeignKey(d => d.CodPelicula)
-                    .HasConstraintName("fk_cod_peliculaVenta");
 
                 entity.HasOne(d => d.CodUsuarioNavigation)
                     .WithMany(p => p.TVenta)
                     .HasForeignKey(d => d.CodUsuario)
                     .HasConstraintName("fk_cod_usuarioVenta");
+            });
+
+            modelBuilder.Entity<TdetalleAlquiler>(entity =>
+            {
+                entity.HasKey(e => new { e.CodAlquiler, e.CodDetalleAlquiler })
+                    .HasName("PK__TDetalle__03DCB2E0FAAD4DBE");
+
+                entity.ToTable("TDetalleAlquiler");
+
+                entity.Property(e => e.CodAlquiler).HasColumnName("cod_alquiler");
+
+                entity.Property(e => e.CodDetalleAlquiler).HasColumnName("cod_detalleAlquiler");
+
+                entity.Property(e => e.CodPelicula).HasColumnName("cod_pelicula");
+
+                entity.Property(e => e.FechaDevolucion)
+                    .HasColumnName("fechaDevolucion")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Precio)
+                    .HasColumnName("precio")
+                    .HasColumnType("numeric(18, 2)");
+
+                entity.HasOne(d => d.CodAlquilerNavigation)
+                    .WithMany(p => p.TdetalleAlquiler)
+                    .HasForeignKey(d => d.CodAlquiler)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_cod_alquiler");
+
+                entity.HasOne(d => d.CodPeliculaNavigation)
+                    .WithMany(p => p.TdetalleAlquiler)
+                    .HasForeignKey(d => d.CodPelicula)
+                    .HasConstraintName("fk_cod_peliculaAlquiler");
+            });
+
+            modelBuilder.Entity<TdetalleVenta>(entity =>
+            {
+                entity.HasKey(e => new { e.CodVenta, e.CodDetalleVenta })
+                    .HasName("PK__TDetalle__BE9E26A35BF1AAC4");
+
+                entity.ToTable("TDetalleVenta");
+
+                entity.Property(e => e.CodVenta).HasColumnName("cod_venta");
+
+                entity.Property(e => e.CodDetalleVenta).HasColumnName("cod_detalleVenta");
+
+                entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+
+                entity.Property(e => e.CodPelicula).HasColumnName("cod_pelicula");
+
+                entity.Property(e => e.PrecioTotal)
+                    .HasColumnName("precioTotal")
+                    .HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.PrecioUnidad)
+                    .HasColumnName("precioUnidad")
+                    .HasColumnType("numeric(18, 2)");
+
+                entity.HasOne(d => d.CodPeliculaNavigation)
+                    .WithMany(p => p.TdetalleVenta)
+                    .HasForeignKey(d => d.CodPelicula)
+                    .HasConstraintName("fk_cod_peliculaVenta");
+
+                entity.HasOne(d => d.CodVentaNavigation)
+                    .WithMany(p => p.TdetalleVenta)
+                    .HasForeignKey(d => d.CodVenta)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_cod_venta");
             });
 
             OnModelCreatingPartial(modelBuilder);

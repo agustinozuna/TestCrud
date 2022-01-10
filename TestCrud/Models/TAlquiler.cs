@@ -9,14 +9,17 @@ namespace TestCrud.Models
 {
     public partial class TAlquiler
     {
+        public TAlquiler()
+        {
+            TdetalleAlquiler = new HashSet<TdetalleAlquiler>();
+        }
+
         public int CodAlquiler { get; set; }
         public int? CodUsuario { get; set; }
-        public int? CodPelicula { get; set; }
-        public decimal? Precio { get; set; }
+        public decimal? Total { get; set; }
         public DateTime? Fecha { get; set; }
-        public DateTime? FechaDevolucion { get; set; }
 
-        public virtual TPelicula CodPeliculaNavigation { get; set; }
         public virtual TUsers CodUsuarioNavigation { get; set; }
+        public virtual ICollection<TdetalleAlquiler> TdetalleAlquiler { get; set; }
     }
 }

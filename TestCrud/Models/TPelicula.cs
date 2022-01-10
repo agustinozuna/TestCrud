@@ -11,9 +11,9 @@ namespace TestCrud.Models
     {
         public TPelicula()
         {
-            TAlquiler = new HashSet<TAlquiler>();
             TGeneroPelicula = new HashSet<TGeneroPelicula>();
-            TVenta = new HashSet<TVenta>();
+            TdetalleAlquiler = new HashSet<TdetalleAlquiler>();
+            TdetalleVenta = new HashSet<TdetalleVenta>();
         }
 
         public int CodPelicula { get; set; }
@@ -23,8 +23,8 @@ namespace TestCrud.Models
         public decimal? PrecioAlquiler { get; set; }
         public decimal? PrecioVenta { get; set; }
 
-        public virtual ICollection<TAlquiler> TAlquiler { get; set; }
         public virtual ICollection<TGeneroPelicula> TGeneroPelicula { get; set; }
-        public virtual ICollection<TVenta> TVenta { get; set; }
+        public virtual ICollection<TdetalleAlquiler> TdetalleAlquiler { get; set; }
+        public virtual ICollection<TdetalleVenta> TdetalleVenta { get; set; }
     }
 }

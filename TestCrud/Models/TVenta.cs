@@ -9,13 +9,17 @@ namespace TestCrud.Models
 {
     public partial class TVenta
     {
+        public TVenta()
+        {
+            TdetalleVenta = new HashSet<TdetalleVenta>();
+        }
+
         public int CodVenta { get; set; }
         public int? CodUsuario { get; set; }
-        public int? CodPelicula { get; set; }
-        public decimal? Precio { get; set; }
+        public decimal? Total { get; set; }
         public DateTime? Fecha { get; set; }
 
-        public virtual TPelicula CodPeliculaNavigation { get; set; }
         public virtual TUsers CodUsuarioNavigation { get; set; }
+        public virtual ICollection<TdetalleVenta> TdetalleVenta { get; set; }
     }
 }
