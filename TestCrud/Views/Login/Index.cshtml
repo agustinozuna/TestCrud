@@ -1,0 +1,134 @@
+﻿@model TestCrud.Models.TUsers
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        input[type=text], input[type=password], input[type=email] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2E89E8;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            button:hover {
+                opacity: 0.8;
+            }
+
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @@media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+
+
+        .form-signin {
+            max-width: 380px;
+            padding: 5px 15px 25px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,0.1);
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="row form-signin">
+        <div class="col-md-4">
+            <section>
+                <form asp-action="Index">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card custom-card">
+                        <div class="card-header bg-primary text-white">
+                            <h3>Login Form</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                Usuario
+                                @Html.TextBoxFor(u => u.TxtUser, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.TxtUser)
+                            </div>
+                            <div class="form-group">
+                                Contrasenha
+                                @Html.PasswordFor(u => u.TxtPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.TxtPassword)
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary rounded-0">Login</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-md-6 col-md-offset-2">
+            <section>
+                <h4 style="text-align:center">Demo</h4>
+                <hr />
+                <div>
+                    <p style="text-align:center">
+                        <b>TestCrud - César Agustín Ozuna Leguizamón</b>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

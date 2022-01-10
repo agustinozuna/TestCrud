@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TestCrud.Models.TPelicula>
+
+@{
+    ViewBag.Title = "stockAlquiler";
+}
+
+<h2>Stock Alquiler</h2>
+
+<table class="table">
+    <tr>
+        <th>
+           Película
+        </th>
+        <th>
+           Cantidad Disponible para Alquilar
+        </th>
+        <th>
+           Cantidad Disponible para Vender
+        </th>
+        <th>
+           Precio Alquiler
+        </th>
+        <th>
+           Precio Venta
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TxtDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantDisponiblesAlquiler)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantDisponiblesVenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioAlquiler)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioVenta)
+            </td>
+        </tr>
+    }
+
+</table>
