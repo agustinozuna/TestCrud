@@ -1,0 +1,24 @@
+﻿@model TestCrud.Models.TGenero
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalle</h1>
+
+<div>
+    <h4>TGenero</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Descripción
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TxtDesc)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CodGenero">Editar</a> |
+    <a asp-action="Index">Regresar</a>
+</div>

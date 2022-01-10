@@ -20,13 +20,18 @@ namespace TestCrud.Controllers
             _logger = logger;
         }
 
-        [Authorize(Roles = "Administrador")]
         public IActionResult Index()
         {
             return View();
         }
 
         public IActionResult IndexCliente()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public IActionResult IndexAdministrador()
         {
             return View();
         }

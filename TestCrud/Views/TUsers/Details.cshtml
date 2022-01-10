@@ -1,60 +1,54 @@
 ﻿@model TestCrud.Models.TUsers
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalle";
 }
 
-<h1>Details</h1>
+<h1>Detalle</h1>
 
 <div>
     <h4>TUsers</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TxtUser)
+            Usuario
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TxtUser)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TxtPassword)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TxtPassword)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TxtNombre)
+            Nombre
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TxtNombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TxtApellido)
+           Apellido
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TxtApellido)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NroDoc)
+           Nro. Doc.
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NroDoc)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SnActivo)
+            Activo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SnActivo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodRolNavigation)
+            Rol
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodRolNavigation.CodRol)
+            @Html.DisplayFor(model => model.CodRolNavigation.TxtDesc)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CodUsuario">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.CodUsuario">Editar</a> |
+    <a asp-action="Index">Regresar</a>
 </div>

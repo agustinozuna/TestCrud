@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
 <h4>TPelicula</h4>
 <hr />
@@ -13,38 +13,38 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TxtDesc" class="control-label"></label>
+                <label class="control-label">Película</label>
                 <input asp-for="TxtDesc" class="form-control" />
                 <span asp-validation-for="TxtDesc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CantDisponiblesAlquiler" class="control-label"></label>
+                <label class="control-label">Cantidad Disponible Alquiler</label>
                 <input asp-for="CantDisponiblesAlquiler" class="form-control" />
                 <span asp-validation-for="CantDisponiblesAlquiler" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CantDisponiblesVenta" class="control-label"></label>
+                <label class="control-label">Cantidad Disponible Venta</label>
                 <input asp-for="CantDisponiblesVenta" class="form-control" />
                 <span asp-validation-for="CantDisponiblesVenta" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PrecioAlquiler" class="control-label"></label>
+                <label class="control-label">Precio Alquiler</label>
                 <input asp-for="PrecioAlquiler" class="form-control" />
                 <span asp-validation-for="PrecioAlquiler" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PrecioVenta" class="control-label"></label>
+                <label  class="control-label">Precio Venta</label>
                 <input asp-for="PrecioVenta" class="form-control" />
                 <span asp-validation-for="PrecioVenta" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 

@@ -1,0 +1,28 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@{
+    ViewBag.Title = "peliculasSinDevoluciones";
+}
+
+<h2>Peliculas Sin Devoluciones</h2>
+<h4>Lista de películas que no fueron devueltas.</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cod. Pelicula</th>
+            <th>Pelicula</th>
+            <th>Ver Lista de clientes.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td>@row[0]</td>
+                <td>@row[1]</td>
+                <td>@Html.ActionLink("Listar", "usuariosSinDevolucionPorPelicula", new { cod_pelicula = row[0] })</td>
+            </tr>
+        }
+    </tbody>
+</table>

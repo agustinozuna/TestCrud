@@ -6,6 +6,12 @@
 <h1>Hola</h1>
 <p>Como usuario con rol Cliente las acciones permitidas son: Consultar stock de peliculas para alquilar y venta.</p>
 <ul>
-    <li>Stock Alquiler</li>
-    <li>Stock Venta</li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="TPeliculas" asp-action="stockAlquiler">Listar peliculas en Stock Alquiler</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="TPeliculas" asp-action="stockVenta">Listar peliculas en Stock Venta</a>
+    </li>
+
+
 </ul>

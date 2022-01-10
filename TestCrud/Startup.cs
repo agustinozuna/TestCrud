@@ -30,9 +30,16 @@ namespace TestCrud
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(o => o.LoginPath = new PathString("/Login"));
 
+
+            //services.AddDbContext(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
             services.AddDbContext<TestCrudContext>(options =>
-                options.UseSqlServer(
+                options.UseLazyLoadingProxies().UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<TestCrudContext>(options => op);
+
 
             services.AddControllersWithViews();
         }

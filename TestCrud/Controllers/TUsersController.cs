@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TestCrud.Models;
 
 namespace TestCrud.Controllers
@@ -14,9 +17,10 @@ namespace TestCrud.Controllers
     public class TUsersController : Controller
     {
         private readonly TestCrudContext _context;
-
-        public TUsersController(TestCrudContext context)
+        public IConfiguration Configuration { get; }
+        public TUsersController(TestCrudContext context, IConfiguration configuration)
         {
+            Configuration = configuration;
             _context = context;
         }
 
@@ -49,7 +53,7 @@ namespace TestCrud.Controllers
         // GET: TUsers/Create
         public IActionResult Create()
         {
-            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "CodRol");
+            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "TxtDesc");
             return View();
         }
 
@@ -58,15 +62,46 @@ namespace TestCrud.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CodUsuario,TxtUser,TxtPassword,TxtNombre,TxtApellido,NroDoc,CodRol,SnActivo")] TUsers tUsers)
+        public async Task<IActionResult> Create([Bind("CodUsuario,TxtUser,TxtPassword,ConfirmPassword,TxtNombre,TxtApellido,NroDoc,CodRol")] TUsers tUsers)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tUsers);
-                await _context.SaveChangesAsync();
+                //_context.Add(tUsers);
+                //await _context.SaveChangesAsync();
+
+
+                try
+                {
+                    using (SqlConnection sql = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("crearUsuario", sql))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add(new SqlParameter("@txtUser", tUsers.TxtUser));
+                            cmd.Parameters.Add(new SqlParameter("@txtPassword", tUsers.TxtPassword));
+                            cmd.Parameters.Add(new SqlParameter("@txtNombre", tUsers.TxtNombre));
+                            cmd.Parameters.Add(new SqlParameter("@txtApellido", tUsers.TxtApellido));
+                            cmd.Parameters.Add(new SqlParameter("@txtnro_doc", tUsers.NroDoc));
+                            cmd.Parameters.Add(new SqlParameter("@cod_rol", tUsers.CodRol));
+                            sql.Open();
+                            cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+                            sql.Close();
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "TxtDesc", tUsers.CodRol);
+                    ViewData["error"] = ex.Message;
+                    return View(tUsers);
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "CodRol", tUsers.CodRol);
+            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "TxtDesc", tUsers.CodRol);
             return View(tUsers);
         }
 
@@ -83,7 +118,7 @@ namespace TestCrud.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "CodRol", tUsers.CodRol);
+            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "TxtDesc", tUsers.CodRol);
             return View(tUsers);
         }
 
@@ -119,7 +154,7 @@ namespace TestCrud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "CodRol", tUsers.CodRol);
+            ViewData["CodRol"] = new SelectList(_context.TRol, "CodRol", "TxtDesc", tUsers.CodRol);
             return View(tUsers);
         }
 

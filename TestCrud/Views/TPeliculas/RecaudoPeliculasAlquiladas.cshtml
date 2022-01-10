@@ -1,0 +1,26 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@{
+    ViewBag.Title = "recaudoPeliculasAlquiladas";
+}
+
+<h2>Recaudo Peliculas Alquiladas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pelicula</th>
+            <th>Cantidad Alquilado</th>
+            <th>Recaudado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td>@row[0]</td>
+                <td>@row[1]</td>
+                <td>@row[2]</td>
+            </tr>
+        }
+    </tbody>
+</table>

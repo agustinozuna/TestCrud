@@ -7,25 +7,25 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TxtDesc)
+               Película
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CantDisponiblesAlquiler)
+               Cantidad Disponible Alquiler
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CantDisponiblesVenta)
+                Cantidad Disponible Venta
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioAlquiler)
+               Precio Alquiler
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioVenta)
+              Precio Venta
             </th>
             <th></th>
         </tr>
@@ -49,9 +49,10 @@
                 @Html.DisplayFor(modelItem => item.PrecioVenta)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CodPelicula">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CodPelicula">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CodPelicula">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.CodPelicula">Modificar</a> |
+                <a asp-action="Details" asp-route-id="@item.CodPelicula">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.CodPelicula">Borrar</a> |
+                @Html.ActionLink("Asignar Género", "AsignarGenero", new { id = item.CodPelicula })
             </td>
         </tr>
 }

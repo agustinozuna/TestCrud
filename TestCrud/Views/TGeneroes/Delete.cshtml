@@ -1,0 +1,26 @@
+﻿@model TestCrud.Models.TGenero
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Borrar</h1>
+
+<div>
+    <h4>TGenero</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Descripción
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TxtDesc)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CodGenero" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar</a>
+    </form>
+</div>

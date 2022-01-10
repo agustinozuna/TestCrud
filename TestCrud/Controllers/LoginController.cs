@@ -59,7 +59,7 @@ namespace TestCrud.Controllers
                     }
                     else
                     {
-                        return Redirect("~/Home/Index");
+                        return Redirect("~/Home/IndexAdministrador");
                     }    
                 }
 

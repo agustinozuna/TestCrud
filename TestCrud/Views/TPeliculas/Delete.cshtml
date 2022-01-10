@@ -4,39 +4,39 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Borrar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Borrar es poner en 0 el stock de ventas y alquileres</h3>
 <div>
     <h4>TPelicula</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TxtDesc)
+            Película
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TxtDesc)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CantDisponiblesAlquiler)
+            Cantidad Disponible Alquiler
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CantDisponiblesAlquiler)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CantDisponiblesVenta)
+        <dt class="col-sm-2">
+            Cantidad Disponible Venta
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CantDisponiblesVenta)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioAlquiler)
+            Precio Alquiler
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PrecioAlquiler)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioVenta)
+           Precio Venta
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PrecioVenta)
@@ -45,7 +45,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="CodPelicula" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar</a>
     </form>
 </div>
