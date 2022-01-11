@@ -55,13 +55,55 @@
                     <thead>
                         <tr>
                             <th>
-                                id
+                                Cod. Película
                             </th>
 
                             <th>
                                 Película
                             </th>
+                            <th>
+                                Precio Alquiler
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- Tabla Fin -->
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<div class="modal fade" id="modal-usuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Usuarios</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Tabla Inicio -->
+                <table id="tabla-usuario" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cod. Usuario
+                            </th>
+                            <th>
+                                Usuario
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Apelido
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,7 +121,6 @@
 
 
 
-
 <div id="transaccion">
     @*<div class="modal-dialog modal-lg" style=" width 900px !important;">*@
     @*  <div class="modal-content">*@
@@ -89,19 +130,34 @@
         <h5 style="color:#ff6347">Películas</h5>
         <hr />
         <div class="form-horizontal">
-            <input type="hidden" id="CodUsuario" />
-            <div class="form-group">
-                <label class="control-label col-md-2">
-                    Usuario
-                </label>
-                <div class="col-md-4">
-                    <input type="text" id="name" name="name" placeholder="Usuario" class="form-control" />
+          @*  <input type="hidden" id="CodUsuario" />*@
+            @*<div class="form-group">
+            <label class="control-label col-md-2">
+                Usuario
+            </label>
+            <div class="col-md-4">
+                <input type="text" id="name" name="name" placeholder="Usuario" class="form-control" />
+            </div>
+        </div>*@
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Usuario</label>
+                <div class="input-group">
+                    <select class="form-control" a asp-items="ViewBag.CodUsuario" id="CodUsuario">
+                        <option value="0" selected hidden disabled>Seleccione Usuario</option>
+                    </select>
+                    <span class="input-group-btn" style="padding-left:5px">
+                        <button type="button" class="btn btn-secondary" id="btn-modalUsuario">Buscar</button>
+                    </span>
                 </div>
             </div>
+
+
+
         </div>
 
         @*Detalle Transaccion*@
-        <h5 style="margin-top:10px;color:#ff6347">Order Details</h5>
+        <h5 style="margin-top:10px;color:#ff6347">Detalle Alquiler</h5>
         <hr />
         <div class="form-horizontal">
             <input type="hidden" id="OrderId" />
@@ -109,8 +165,8 @@
                 <div class="form-group col-md-4">
                     <label class="control-label">Película</label>
                     <div class="input-group">
-                        <select class="form-control" a asp-items="ViewBag.CodPelicula" id="CodPelicula">
-                            <option value="" selected disabled hidden>Seleccione Película</option>
+                        <select class="form-control" a asp-items="ViewBag.CodPelicula" id="CodPelicula" onchange="javascript:cargarPrecio()">
+                            <option value="0" selected>Seleccione Película</option>
                         </select>
                         <span class="input-group-btn" style="padding-left:5px">
                             <button type="button" class="btn btn-secondary" id="btn-modalPelicula">Buscar</button>
@@ -118,51 +174,60 @@
                     </div>
                 </div>
 
+
                 <div class="col-md-4">
-                    <input type="number" id="precio" name="precio" placeholder="Precio" readonly class="form-control" />
+                    <select class="form-control" a asp-items="ViewBag.PrecioAlquiler" id="precio" name="precio" disabled>
+                        <option value="0">Precio Alquiler</option>
+                    </select>
+
+                    @* <input type="number" id="precio" name="precio" placeholder="Precio" readonly class="form-control" />*@
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Total a pagar:</label>
+                    <input type="number" id="total" name="total" placeholder="Total" readonly class="form-control" />
+                    <label id="total2" name="total2"></label>
+                </div>
+                    @*<div class="col-md-4">
+                    <input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />
+                </div>
+                <label class="control-label col-md-2">
+                    Price
+                </label>
+                <div class="col-md-4">
+                    <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">
+                    Quantity
+                </label>
+                <div class="col-md-4">
+                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
                 </div>
 
-                @*<div class="col-md-4">
-                            <input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />
-                        </div>
-                        <label class="control-label col-md-2">
-                            Price
-                        </label>
-                        <div class="col-md-4">
-                            <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" />
-                        </div>
+            </div>*@
+                    <div class="col-md-2">
+                        <a id="addToList" class="btn btn-primary">Agregar</a>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-md-2">
-                            Quantity
-                        </label>
-                        <div class="col-md-4">
-                            <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
-                        </div>
 
-                    </div>*@
-                <div class="col-md-2">
-                    <a id="addToList" class="btn btn-primary">Agregar</a>
+                    <table id="detailsTable" class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:20%">Cod.Película</th>
+                                <th style="width:30%">Película</th>
+                                @*<th style="width:10%">Qty</th>*@
+                                <th style="width:25%">Precio</th>
+                                @*<th style="width:25%">Amount</th>*@
+                                <th style="width:10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-
-
-                <table id="detailsTable" class="table">
-                    <thead>
-                        <tr>
-                            <th style="width:20%">Cod.Película</th>
-                            <th style="width:30%">Película</th>
-                            @*<th style="width:10%">Qty</th>*@
-                            <th style="width:25%">Precio</th>
-                            @*<th style="width:25%">Amount</th>*@
-                            <th style="width:10%"></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                @*  *@
             </div>
-            @*  *@
-        </div>
         <div class="modal-footer">
             @*<button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>*@
             <button id="guardarTransaccion" type="submit" class="btn btn-danger">Guardar</button>
@@ -178,6 +243,68 @@
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
     @*<script type="text/javascript" src="~/Scripts/jquery.js"></script>
         <script type="text/javascript" src="~/Scripts/data-table/jquery.dataTables.js"></script>*@
+
+<script>
+    /*usuario modal*/
+
+     $(document).ready(function () {
+        var table = $('#tabla-usuario').DataTable({
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": true
+                }
+            ],
+
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+    "url": "@Url.Content("~/TUsers/GetUsers")",
+    "type": "POST",
+    "datatype":"json"
+    },
+    /*"select: true," pinta de un color al seleccionar fila*/
+    /*select: true,*/
+
+    responsive: true,
+    "pageLength": 10,
+    "filter": true,
+    "responsive": true,
+    "responsivePriority": 1,
+    "data": null,
+            "columns": [
+                { "data": "codUsuario"},
+                { "data": "txtUser" },
+                { "data": "txtNombre" },
+                { "data": "txtApellido"}
+    ]
+    });
+        });
+
+
+        $('#btn-modalUsuario').on('click', function () {
+            $('#modal-usuario').modal('show');
+        });
+
+        @* Recuperar valor de columna oculta *@
+        $(document).ready(function () {
+            var table = $('#tabla-usuario').DataTable();
+
+            $('#tabla-usuario tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                alert(document.getElementById("CodUsuario").value);
+                document.getElementById("CodUsuario").value = data.codUsuario;
+                $('#modal-usuario').modal('hide');
+            });
+        });
+
+
+</script>
+
 
 
     <script>
@@ -213,9 +340,9 @@
     "responsivePriority": 1,
     "data": null,
             "columns": [
-
                 { "data": "codPelicula"},
-                { "data": "txtDesc"},
+                { "data": "txtDesc" },
+                { "data": "precioAlquiler"}
     ]
     });
         });
@@ -225,6 +352,22 @@
             $('#modal-pelicula').modal('show');
         });
 
+        @* Recuperar valor de columna oculta *@
+        $(document).ready(function () {
+            var table = $('#tabla-pelicula').DataTable();
+
+            $('#tabla-pelicula tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                document.getElementById("CodPelicula").value = data.codPelicula;
+                document.getElementById("precio").value = data.codPelicula;
+                $('#modal-pelicula').modal('hide');
+            });
+        });
+
+
+        function cargarPrecio() {
+            document.getElementById("precio").value = document.getElementById("CodPelicula").value;
+        }
 
     </script>
 
@@ -233,39 +376,70 @@
         let CodPeliculas = [];
         $("#addToList").click(function (e) {
             e.preventDefault();
+           
+            if ($.trim($("#CodPelicula").val()) == "" || $.trim($("#CodPelicula").val()) == 0) return;
 
-            if ($.trim($("#CodPelicula").val()) == "") return;
-
-
+           
             /*Verificamos si ya esta cargado la película*/
             if (CodPeliculas.includes($("#CodPelicula").val()) == true) {
+                alert('Ya cargó esta película..');
                 return;
             }
+           
             /*Agregamos codpelicula al array*/
             CodPeliculas.push($("#CodPelicula").val());
 
-
+        
             //if ($.trim($("#CodPelicula").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") return;
 
-            var combo = document.getElementById("CodPelicula");
-            var TxtDesc = combo.options[combo.selectedIndex].text;
-
+            var comboPelicula = document.getElementById("CodPelicula");
+            var TxtDesc = comboPelicula.options[comboPelicula.selectedIndex].text;
+         
+            var comboPrecio = document.getElementById("precio");
+            var precio = comboPrecio.options[comboPrecio.selectedIndex].text;
+       
 
             var CodPelicula = $("#CodPelicula").val(),
 
-                precio = $("#precio").val(),
-                //quantity = $("#quantity").val(),
+                   //precio = $("#precio").val(),
+                  //quantity = $("#quantity").val(),
                 detailsTableBody = $("#detailsTable tbody");
 
             var peliculaItem = '<tr><td>' + CodPelicula + '</td><td>' + TxtDesc + '</td><td>' + precio + '</td><td><a data-itemId="0" href="#" class="deleteItem" value="' + CodPelicula + '">Eliminar</a></td></tr>';
             detailsTableBody.append(peliculaItem);
             clearItem();
+            obtenerTotal();
         });
+        /*obtenerTotal*/
+        function obtenerTotal(){
+            
+            var total_col2 = 0;
+            //Recorro todos los tr ubicados en el tbody
+            $('#detailsTable tbody').find('tr').each(function (i, el) {
+
+                //Voy incrementando las variables segun la fila ( .eq(0) representa la fila 1 )     
+                //total_col1 += parseFloat($(this).find('td').eq(0).text());
+                /*Como el precio que recuperamos esta separado por una , no lo detecta como un float, debe ser .*/
+                /*reemplazaremos el , por un .*/
+                total_col2 += parseFloat($(this).find('td').eq(2).text().replace(",", "."));
+
+            });
+            //Muestro el resultado en el th correspondiente a la columna
+            //$('#ejemplo tfoot tr th').eq(0).text("Total " + total_col1);
+            //$('#ejemplo tfoot tr th').eq(2).text("Total " + total_col2);
+            document.getElementById("total").value = total_col2;
+           
+        }
+
+
+
+
         //After Add A New Order In The List, Clear Clean The Form For Add More Order.
         function clearItem() {
-            $("#productName").val('');
-            $("#price").val('');
-            $("#quantity").val('');
+
+            document.getElementById("CodPelicula").value = 0;
+            document.getElementById("precio").value = 0;
+
         }
         // After Add A New Order In The List, If You Want, You Can Remove It.
 
@@ -274,10 +448,14 @@
             var $self = $(this);
             if ($(this).attr('data-itemId') == "0") {
                 /*borramos CodPelicula del array*/
-                CodPeliculas.pop($(this).attr('value'));
+                /*obtenemos indice que corresponde al codpelicula*/
+                var i = CodPeliculas.indexOf($(this).attr('value'));
+                /*eliminamos por su indice*/
+                CodPeliculas.splice(i, 1);
                 $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
                     $(this).remove();
-                });
+                    obtenerTotal();
+                });          
             }
         });
         //After Click Save Button Pass All Data View To Controller For Save Database

@@ -188,6 +188,38 @@ namespace TestCrud.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public ActionResult GetUsers()
+        {
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+
+          
+            var users = (from tempUsers in _context.TUsers select tempUsers);
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                //busqueda por usuario
+                users = users.Where(p => p.TxtUser.ToLower().Contains(searchValue.ToLower().Trim()));
+            }
+
+            recordsTotal = users.Count();
+            var data = users.Skip(skip).Take(pageSize).ToList();
+            var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+            return Json(jsonData);
+        }
+
+
+
+
         private bool TUsersExists(int id)
         {
             return _context.TUsers.Any(e => e.CodUsuario == id);

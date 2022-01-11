@@ -49,8 +49,10 @@ namespace TestCrud.Controllers
         // GET: TAlquilers/Create
         public IActionResult Create()
         {
+            ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "TxtUser",0);
             ViewData["CodPelicula"] = new SelectList(_context.TPelicula.Where(p => p.CantDisponiblesAlquiler>0), "CodPelicula", "TxtDesc");
-            ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "CodUsuario");
+            ViewData["PrecioAlquiler"] = new SelectList(_context.TPelicula.Where(p => p.CantDisponiblesAlquiler > 0), "CodPelicula", "PrecioAlquiler",0);
+            //ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "CodUsuario");
             return View();
         }
 

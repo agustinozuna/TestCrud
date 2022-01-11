@@ -390,7 +390,7 @@ namespace TestCrud.Controllers
         }
 
         /**/
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public ActionResult GetPeliculasAlquiler()
         {
