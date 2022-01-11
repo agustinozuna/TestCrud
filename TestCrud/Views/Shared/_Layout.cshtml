@@ -4,6 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TestCrud</title>
+    @*DataTable*@ @*(Deben ir en este orden)*@
+    @*1)*@
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @*2)*@
+    <link href="~/css/responsive.dataTables.min.css" rel="stylesheet" />
+    @*3)*@
+    <link href="~/css/rowReorder.dataTables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -18,7 +25,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                                    
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Cerrar Sesión</a>
                         </li>
@@ -40,8 +47,20 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    @*Ni idea para que sirve*@
+    @*<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>*@
+
+    @*DataTable Responsive*@ @*(Atencion debe ir si o si en este orden)*@
+
+    @*<script src="~/js/jquery-3.5.1.js"></script>*@ @*(Este ya no es necesario ya que por defecto el proyecto tiene jquery instalado)*@
+    @*1)*@
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    @*2)*@
+    <script src="~/js/dataTables.responsive.min.js"></script>
+    @*3)*@
+    <script src="~/js/dataTables.rowReorder.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

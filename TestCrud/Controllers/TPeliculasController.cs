@@ -389,6 +389,40 @@ namespace TestCrud.Controllers
             return View(dt);
         }
 
+        /**/
+        //[Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public ActionResult GetPeliculasAlquiler()
+        {
+
+            //List<TPelicula> lst = new List<TPelicula>();
+
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+
+            // where agregado 
+            var peliculasAlquiler = (from tempPeliAlquiler in _context.TPelicula select tempPeliAlquiler).Where(p=>p.CantDisponiblesAlquiler>0);
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                //where agregado
+                peliculasAlquiler = peliculasAlquiler.Where(p => p.TxtDesc.ToLower().Contains(searchValue.ToLower().Trim()));
+            }
+
+            recordsTotal = peliculasAlquiler.Count();
+            var data = peliculasAlquiler.Skip(skip).Take(pageSize).ToList();
+            var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+            return Json(jsonData);
+        }
+
 
 
         private bool TPeliculaExists(int id)
