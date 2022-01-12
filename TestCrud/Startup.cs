@@ -39,15 +39,21 @@ namespace TestCrud
                     Configuration.GetConnectionString("DefaultConnection")));
 
             //services.AddDbContext<TestCrudContext>(options => op);
-            services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            //services.AddControllersWithViews()
+            //.AddNewtonsoftJson(options =>
+            // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //);
+            services
+    .AddMvc(options =>
+    {
+        options.InputFormatters.Insert(0, new RawJsonBodyInputFormatter());
+    });
+
             services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
-            //services.AddControllersWithViews();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
