@@ -64,24 +64,6 @@ namespace TestCrud.Controllers
             return View();
         }
 
-        // POST: TAlquilers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("CodAlquiler,CodUsuario,Total,Fecha")] TAlquiler tAlquiler)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(tAlquiler);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "CodUsuario", tAlquiler.CodUsuario);
-        //    return View(tAlquiler);
-        //}
-
         //[HttpPost]
         public ActionResult GuardarTransaccion([FromBody]DetalleAlquilerJson da)
         {
@@ -151,94 +133,6 @@ namespace TestCrud.Controllers
         }
 
 
-
-
-
-
-        // GET: TAlquilers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tAlquiler = await _context.TAlquiler.FindAsync(id);
-            if (tAlquiler == null)
-            {
-                return NotFound();
-            }
-            ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "CodUsuario", tAlquiler.CodUsuario);
-            return View(tAlquiler);
-        }
-
-        // POST: TAlquilers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CodAlquiler,CodUsuario,Total,Fecha")] TAlquiler tAlquiler)
-        {
-            if (id != tAlquiler.CodAlquiler)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tAlquiler);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TAlquilerExists(tAlquiler.CodAlquiler))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "CodUsuario", tAlquiler.CodUsuario);
-            return View(tAlquiler);
-        }
-
-        // GET: TAlquilers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tAlquiler = await _context.TAlquiler
-                .Include(t => t.CodUsuarioNavigation)
-                .FirstOrDefaultAsync(m => m.CodAlquiler == id);
-            if (tAlquiler == null)
-            {
-                return NotFound();
-            }
-
-            return View(tAlquiler);
-        }
-
-        // POST: TAlquilers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var tAlquiler = await _context.TAlquiler.FindAsync(id);
-            _context.TAlquiler.Remove(tAlquiler);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-
         public ActionResult DevolverPelicula(int codPelicula, int codAlquiler, int codDetalleAlquiler)
         {
             using (SqlConnection sql = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
@@ -258,9 +152,6 @@ namespace TestCrud.Controllers
                 return Redirect("~/TAlquilers/Details/"+codAlquiler);
             
         }
-
-
-
             private bool TAlquilerExists(int id)
         {
             return _context.TAlquiler.Any(e => e.CodAlquiler == id);

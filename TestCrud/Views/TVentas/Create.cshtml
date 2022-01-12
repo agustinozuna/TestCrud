@@ -1,22 +1,20 @@
-﻿@model TestCrud.Models.TAlquiler
+﻿@model TestCrud.Models.TVenta
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Venta</h1>
 
-<h4>TAlquiler</h4>
+<h4>TVenta</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CodAlquiler" />
             <div class="form-group">
                 <label asp-for="CodUsuario" class="control-label"></label>
-                <select asp-for="CodUsuario" class="form-control" asp-items="ViewBag.CodUsuario"></select>
-                <span asp-validation-for="CodUsuario" class="text-danger"></span>
+                <select asp-for="CodUsuario" class ="form-control" asp-items="ViewBag.CodUsuario"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Total" class="control-label"></label>
@@ -29,13 +27,13 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 

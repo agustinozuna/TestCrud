@@ -234,19 +234,15 @@
         </div>
     </form>
 </div>
-@*</div>*@
-@*</div>*@
+
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
 
 @section scripts {
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
-    @*<script type="text/javascript" src="~/Scripts/jquery.js"></script>
-        <script type="text/javascript" src="~/Scripts/data-table/jquery.dataTables.js"></script>*@
-
     <script>
     /*usuario modal*/
-
      $(document).ready(function () {
         var table = $('#tabla-usuario').DataTable({
             "columnDefs": [
@@ -256,7 +252,6 @@
                     "searchable": true
                 }
             ],
-
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
@@ -419,10 +414,6 @@
             document.getElementById("total").value = total_col2;
 
         }
-
-
-
-
         //Despues de cargar una pelicula limpiamos datos.
         function clearItem() {
             document.getElementById("CodPelicula").value = 0;
@@ -448,7 +439,7 @@
         //Pasa toda la vista de datos al controlador para guardar la base de datose
         function guardarTransaccion(data) {
             /*Asegurar que este seleccionado usuario y cargado al menos una pelicula*/
-            if ($.trim($("#CodUsuario").val()) == "" || CodPeliculas.length==0) return;
+            if ($.trim($("#CodUsuario").val()) == "" || CodPeliculas.length == 0) return;
 
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
@@ -463,7 +454,6 @@
                     } else {
                         alert(result);
                     }
-
                 },
                 error: function () {
                     alert("Error!")
@@ -500,11 +490,12 @@
 }
 <style>
     .css-serial {
-        counter-reset: serial-number; 
+        counter-reset: serial-number;
     }
+
         .css-serial td:first-child:before {
-            counter-increment: serial-number; 
-            content: counter(serial-number); 
+            counter-increment: serial-number;
+            content: counter(serial-number);
         }
 
     .card {
