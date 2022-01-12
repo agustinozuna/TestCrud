@@ -447,6 +447,9 @@
         });
         //Pasa toda la vista de datos al controlador para guardar la base de datose
         function guardarTransaccion(data) {
+            /*Asegurar que este seleccionado usuario y cargado al menos una pelicula*/
+            if ($.trim($("#CodUsuario").val()) == "" || CodPeliculas.length==0) return;
+
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',

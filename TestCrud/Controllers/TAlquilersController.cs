@@ -44,6 +44,7 @@ namespace TestCrud.Controllers
 
             var tAlquiler = await _context.TAlquiler
                 .Include(t => t.CodUsuarioNavigation)
+                .Include(t => t.TdetalleAlquiler)
                 .FirstOrDefaultAsync(m => m.CodAlquiler == id);
             if (tAlquiler == null)
             {
@@ -237,7 +238,30 @@ namespace TestCrud.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TAlquilerExists(int id)
+
+        public ActionResult DevolverPelicula(int codPelicula, int codAlquiler, int codDetalleAlquiler)
+        {
+            using (SqlConnection sql = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("devolverPelicula", sql))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cod_alquiler", codAlquiler));
+                    cmd.Parameters.Add(new SqlParameter("@cod_detalleAlquiler", codDetalleAlquiler));
+                    cmd.Parameters.Add(new SqlParameter("@cod_pelicula", codPelicula));
+                    sql.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                    sql.Close();
+                }
+            }
+                return Redirect("~/TAlquilers/Details/"+codAlquiler);
+            
+        }
+
+
+
+            private bool TAlquilerExists(int id)
         {
             return _context.TAlquiler.Any(e => e.CodAlquiler == id);
         }
