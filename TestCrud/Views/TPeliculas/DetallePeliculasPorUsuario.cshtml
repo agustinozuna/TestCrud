@@ -1,0 +1,71 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@{
+    ViewData["Title"] = "DetallePeliculasPorUsuario";
+}
+
+<h1>Películas alquiladas por el Usuario-Cliente: "@ViewBag.Usuario" </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cod. Alquiler
+            </th>
+            <th>
+                Cod. Detalle Alquiler
+            </th>
+            <th>
+                Película
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Fecha Devolución
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td>
+                    @row[0]
+                </td>
+                <td>
+                    @row[1]
+                </td>
+                <td>
+                    @row[2]
+                </td>
+                <td>
+                    @row[3]
+                </td>
+                <td>
+                    @row[4]
+                </td>
+                @if (@row[5].ToString()=="")
+                {
+                    <td>
+                        No Devuelto.
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @row[5]
+                    </td>
+                }
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>

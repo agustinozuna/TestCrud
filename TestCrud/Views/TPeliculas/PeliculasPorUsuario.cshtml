@@ -1,0 +1,54 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@{
+    ViewData["Title"] = "PeliculasPorUsuario";
+}
+
+<h1>Lista de usuarios que ya alquilaron...</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cod. Usuario
+            </th>
+            <th>
+                Usuario
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+               Apellido
+            </th>
+            <th>
+                Nro. Documento
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td>
+                    @row[0]
+                </td>
+                <td>
+                    @row[1]
+                </td>
+                <td>
+                    @row[2]
+                </td>
+                <td>
+                    @row[3]
+                </td>
+                <td>
+                    @row[4]
+                </td>
+                <td>
+                    <a asp-action="DetallePeliculasPorUsuario" asp-route-cod_usuario="@row[0]">Ver películas alquiladas</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

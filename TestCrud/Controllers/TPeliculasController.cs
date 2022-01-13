@@ -395,8 +395,6 @@ namespace TestCrud.Controllers
         public ActionResult GetPeliculasAlquiler()
         {
 
-            //List<TPelicula> lst = new List<TPelicula>();
-
             var draw = Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
             var length = Request.Form["length"].FirstOrDefault();
@@ -422,6 +420,89 @@ namespace TestCrud.Controllers
             var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
             return Json(jsonData);
         }
+
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public ActionResult GetPeliculasVentas()
+        {
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+
+            var peliculasVenta = (from tempPeliAlquiler in _context.TPelicula select tempPeliAlquiler).Where(p => p.CantDisponiblesVenta > 0);
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                //where agregado
+                peliculasVenta = peliculasVenta.Where(p => p.TxtDesc.ToLower().Contains(searchValue.ToLower().Trim()));
+            }
+
+            recordsTotal = peliculasVenta.Count();
+            var data = peliculasVenta.Skip(skip).Take(pageSize).ToList();
+            var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+            return Json(jsonData);
+        }
+
+
+
+
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public ActionResult PeliculasPorUsuario()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection sql = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariosConAlquiler", sql))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    sql.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    cmd.Dispose();
+                    sql.Close();
+
+                }
+            }
+            return View(dt);
+        }
+
+
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public ActionResult DetallePeliculasPorUsuario(int cod_usuario)
+        {
+            ViewBag.Usuario = _context.TUsers.FirstOrDefault(p => p.CodUsuario == cod_usuario).TxtUser;
+
+
+            DataTable dt = new DataTable();
+            using (SqlConnection sql = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("peliculasAlquiladasPorUsuario", sql))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cod_usuario",cod_usuario));
+                    sql.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    cmd.Dispose();
+                    sql.Close();
+                }
+            }
+            return View(dt);
+        }
+
+
 
 
 

@@ -6,34 +6,548 @@
 
 <h1>Venta</h1>
 
-<h4>TVenta</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CodUsuario" class="control-label"></label>
-                <select asp-for="CodUsuario" class ="form-control" asp-items="ViewBag.CodUsuario"></select>
+@*Ventana modal-películas*@
+<div class="modal fade" id="modal-pelicula" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Películas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
-                <span asp-validation-for="Total" class="text-danger"></span>
+            <div class="modal-body">
+                <!-- Tabla Inicio -->
+                <table id="tabla-pelicula" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cod. Película
+                            </th>
+
+                            <th>
+                                Película
+                            </th>
+                            <th>
+                                Precio Venta
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- Tabla Fin -->
             </div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
+            <div class="modal-footer">
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
+</div>
+
+
+<div class="modal fade" id="modal-usuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Usuarios</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Tabla Inicio -->
+                <table id="tabla-usuario" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cod. Usuario
+                            </th>
+                            <th>
+                                Usuario
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Apelido
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- Tabla Fin -->
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="transaccion">
+    @*<div class="modal-dialog modal-lg" style=" width 900px !important;">*@
+    @*  <div class="modal-content">*@
+    <form id="Transaccion">
+        @*<div class="modal-body">*@
+        @*Cabecera Detalle*@
+        <h5 style="color:#ff6347">Películas</h5>
+        <hr />
+        <div class="form-horizontal">
+            @*  <input type="hidden" id="CodUsuario" />*@
+            @*<div class="form-group">
+                    <label class="control-label col-md-2">
+                        Usuario
+                    </label>
+                    <div class="col-md-4">
+                        <input type="text" id="name" name="name" placeholder="Usuario" class="form-control" />
+                    </div>
+                </div>*@
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Usuario</label>
+                <div class="input-group">
+                    <select class="form-control" a asp-items="ViewBag.CodUsuario" id="CodUsuario" name="CodUsuario">
+                        <option value="0" selected hidden disabled>Seleccione Usuario</option>
+                    </select>
+                    <span class="input-group-btn" style="padding-left:5px">
+                        <button type="button" class="btn btn-secondary" id="btn-modalUsuario">Buscar</button>
+                    </span>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        @*Detalle Transaccion*@
+        <h5 style="margin-top:10px;color:#ff6347">Detalle Venta</h5>
+        <hr />
+        <div class="form-horizontal">
+            <input type="hidden" id="OrderId" />
+            <div class="form-group">
+                <div class="form-group col-md-4">
+                    <label class="control-label">Película</label>
+                    <div class="input-group">
+                        <select class="form-control" a asp-items="ViewBag.CodPelicula" id="CodPelicula" onchange="javascript:cargarPrecio()">
+                            <option value="0" selected>Seleccione Película</option>
+                        </select>
+                        <span class="input-group-btn" style="padding-left:5px">
+                            <button type="button" class="btn btn-secondary" id="btn-modalPelicula">Buscar</button>
+                        </span>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-4">
+                    <select class="form-control" a asp-items="ViewBag.PrecioVenta" id="precio" name="precio" disabled>
+                        <option value="0">Precio Venta</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label">Ingrese cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" placeholder="Cantidad" min="1" value="1" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label">Total a pagar:</label>
+                    <input type="number" id="total" name="total" placeholder="Total" readonly class="form-control" />
+                    <label id="total2" name="total2"></label>
+                </div>
+                @*<div class="col-md-4">
+                <input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />
+            </div>
+            <label class="control-label col-md-2">
+                Price
+            </label>
+            <div class="col-md-4">
+                <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Quantity
+            </label>
+            <div class="col-md-4">
+                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
+            </div>
+
+        </div>*@
+                <div class="col-md-2">
+                    <a id="addToList" class="btn btn-primary">Agregar</a>
+                </div>
+
+
+                <table id="detailsTable" class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">Cod.Película</th>
+                            <th style="width:30%">Película</th>
+                            <th style="width:20%">Precio Unitario</th>
+                            <th style="width:10%">Cantidad</th>
+                            <th style="width:25%">Total</th>
+                            <th style="width:10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            @*  *@
+        </div>
+        <div class="modal-footer">
+            @*<button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>*@
+            <button id="guardarTransaccion" name="guardarTransaccion" type="submit" class="btn btn-danger">Guardar</button>
+        </div>
+    </form>
 </div>
 
 <div>
     <a asp-action="Index">Regresar</a>
 </div>
 
+@section scripts {
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <script>
+    /*usuario modal*/
+     $(document).ready(function () {
+        var table = $('#tabla-usuario').DataTable({
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": true
+                }
+            ],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+    "url": "@Url.Content("~/TUsers/GetUsers")",
+    "type": "POST",
+    "datatype":"json"
+    },
+    responsive: true,
+    "pageLength": 10,
+    "filter": true,
+    "responsive": true,
+    "responsivePriority": 1,
+    "data": null,
+            "columns": [
+                { "data": "codUsuario"},
+                { "data": "txtUser" },
+                { "data": "txtNombre" },
+                { "data": "txtApellido"}
+    ]
+    });
+        });
+
+
+        $('#btn-modalUsuario').on('click', function () {
+            $('#modal-usuario').modal('show');
+        });
+
+        @* Recuperar valor de columna oculta *@
+        $(document).ready(function () {
+            var table = $('#tabla-usuario').DataTable();
+
+            $('#tabla-usuario tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                document.getElementById("CodUsuario").value = data.codUsuario;
+                $('#modal-usuario').modal('hide');
+            });
+        });
+
+
+    </script>
+
+
+
+    <script>
+
+        /*Recuperar peliculas en la ventana modal*/
+        $(document).ready(function () {
+        var table = $('#tabla-pelicula').DataTable({
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": true
+                }
+            ],
+
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+    "url": "@Url.Content("~/TPeliculas/GetPeliculasVentas")",
+    "type": "POST",
+    "datatype":"json"
+    },
+    responsive: true,
+    "pageLength": 10,
+    "filter": true,
+    "responsive": true,
+    "responsivePriority": 1,
+    "data": null,
+            "columns": [
+                { "data": "codPelicula"},
+                { "data": "txtDesc" },
+                { "data": "precioVenta"}
+    ]
+    });
+        });
+
+
+        $('#btn-modalPelicula').on('click', function () {
+            $('#modal-pelicula').modal('show');
+        });
+
+        @* Recuperar valor de columna oculta *@
+        $(document).ready(function () {
+            var table = $('#tabla-pelicula').DataTable();
+
+            $('#tabla-pelicula tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                document.getElementById("CodPelicula").value = data.codPelicula;
+                document.getElementById("precio").value = data.codPelicula;
+                $('#modal-pelicula').modal('hide');
+            });
+        });
+
+
+        function cargarPrecio() {
+            document.getElementById("precio").value = document.getElementById("CodPelicula").value;
+        }
+
+    </script>
+
+    <script>
+        /*Este array guardara codpeliculas para que no se vuelvan a cargar en el detalle.*/
+        let CodPeliculas = [];
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+
+            if ($.trim($("#CodPelicula").val()) == "" || $.trim($("#CodPelicula").val()) == 0) return;
+
+
+            /*Verificamos si ya esta cargado la película*/
+            if (CodPeliculas.includes($("#CodPelicula").val()) == true) {
+                alert('Ya cargó esta película..');
+                return;
+            }
+
+            /*Agregamos codpelicula al array*/
+            CodPeliculas.push($("#CodPelicula").val());
+
+
+            //if ($.trim($("#CodPelicula").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") return;
+
+            var comboPelicula = document.getElementById("CodPelicula");
+            var TxtDesc = comboPelicula.options[comboPelicula.selectedIndex].text;
+
+            var comboPrecio = document.getElementById("precio");
+            var precio = comboPrecio.options[comboPrecio.selectedIndex].text;
+
+            var CodPelicula = $("#CodPelicula").val(),
+                cantidad = $("#cantidad").val(),
+
+                //precio = $("#precio").val(),
+                //quantity = $("#quantity").val(),
+                detailsTableBody = $("#detailsTable tbody");
+
+            var peliculaItem = '<tr><td>' + CodPelicula + '</td><td>' + TxtDesc + '</td><td>' + precio + '</td><td>' + cantidad + '</td><td>' + (parseFloat(precio.replace(",", ".")) * parseInt(cantidad)) + '</td><td><a data-itemId="0" href="#" class="deleteItem" value="' + CodPelicula + '">Eliminar</a></td></tr>';
+            detailsTableBody.append(peliculaItem);
+            clearItem();
+            obtenerTotal();
+        });
+        /*obtenerTotal*/
+        function obtenerTotal() {
+
+            var total_col2 = 0;
+            //Recorro todos los tr ubicados en el tbody
+            $('#detailsTable tbody').find('tr').each(function (i, el) {
+                //Voy incrementando las variables segun la fila ( .eq(0) representa la fila 1 )
+                /*Como el precio que recuperamos esta separado por una , no lo detecta como un float, debe ser .*/
+                /*reemplazaremos el , por un .*/
+                total_col2 += parseFloat($(this).find('td').eq(4).text().replace(",", "."));
+            });
+            //Muestro el resultado en el th correspondiente a la columna
+
+            document.getElementById("total").value = total_col2;
+
+        }
+        //Despues de cargar una pelicula limpiamos datos.
+        function clearItem() {
+            document.getElementById("CodPelicula").value = 0;
+            document.getElementById("precio").value = 0;
+            document.getElementById("cantidad").value = 1;
+        }
+        // Boton para eliminar una fila
+
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+                /*borramos CodPelicula del array*/
+                /*obtenemos indice que corresponde al codpelicula*/
+                var i = CodPeliculas.indexOf($(this).attr('value'));
+                /*eliminamos por su indice*/
+                CodPeliculas.splice(i, 1);
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                    obtenerTotal();
+                });
+            }
+        });
+        //Pasa toda la vista de datos al controlador para guardar la base de datose
+        function guardarTransaccion(data) {
+            /*Asegurar que este seleccionado usuario y cargado al menos una pelicula*/
+            if ($.trim($("#CodUsuario").val()) == "" || CodPeliculas.length == 0) return;
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/TVentas/GuardarTransaccion",
+                data: data,
+                success: function (result) {
+                    if (result == true) {
+                        alert("Éxit: venta de película completado!");
+                        location.reload();
+                    } else {
+                        alert(result);
+                    }
+                },
+                error: function () {
+                    alert("Error!")
+                }
+            });
+        }
+        //Recopila lista de peliculas para pasar al controlador
+        $("#guardarTransaccion").click(function (e) {
+            e.preventDefault();
+
+            var peliculas = [];
+            peliculas.length = 0;
+
+            var cantidad = [];
+            cantidad.length = 0;
+
+            $.each($("#detailsTable tbody tr"), function () {
+                peliculas.push(
+                    $(this).find('td:eq(0)').html()
+                );
+                cantidad.push($(this).find('td:eq(3)').html());
+            });
+
+            var data = {
+                CodUsuario: $("#CodUsuario").val(),
+                CodPelicula: peliculas,
+                Cantidad: cantidad
+            };
+
+            data = JSON.stringify(data);
+
+            $.when(guardarTransaccion(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    </script>
+}
+<style>
+    .css-serial {
+        counter-reset: serial-number;
+    }
+
+        .css-serial td:first-child:before {
+            counter-increment: serial-number;
+            content: counter(serial-number);
+        }
+
+    .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+    }
+
+        .card > hr {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        .card > .list-group:first-child .list-group-item:first-child {
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+        }
+
+        .card > .list-group:last-child .list-group-item:last-child {
+            border-bottom-right-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        margin-bottom: 0.75rem;
+    }
+
+    .card-subtitle {
+        margin-top: -0.375rem;
+        margin-bottom: 0;
+    }
+
+    .card-text:last-child {
+        margin-bottom: 0;
+    }
+
+    .card-link:hover {
+        text-decoration: none;
+    }
+
+    .card-link + .card-link {
+        margin-left: 1.25rem;
+    }
+
+    .card-header {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, 0.03);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+        .card-header:first-child {
+            border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+        }
+
+        .card-header + .list-group .list-group-item:first-child {
+            border-top: 0;
+        }
+</style>
