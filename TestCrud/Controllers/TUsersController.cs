@@ -66,9 +66,6 @@ namespace TestCrud.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_context.Add(tUsers);
-                //await _context.SaveChangesAsync();
-
 
                 try
                 {

@@ -59,24 +59,6 @@ namespace TestCrud.Controllers
             return View();
         }
 
-        //// POST: TVentas/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("CodVenta,CodUsuario,Total,Fecha")] TVenta tVenta)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(tVenta);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CodUsuario"] = new SelectList(_context.TUsers, "CodUsuario", "CodUsuario", tVenta.CodUsuario);
-        //    return View(tVenta);
-        //}
-
-
         public ActionResult GuardarTransaccion([FromBody] DetalleVentaJson da)
         {
             try

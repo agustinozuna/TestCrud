@@ -4,41 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-
-@*<h1>Create</h1>
-
-    <h4>TAlquiler</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="CodUsuario" class="control-label"></label>
-                    <select asp-for="CodUsuario" class ="form-control" asp-items="ViewBag.CodUsuario"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Total" class="control-label"></label>
-                    <input asp-for="Total" class="form-control" />
-                    <span asp-validation-for="Total" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Fecha" class="control-label"></label>
-                    <input asp-for="Fecha" class="form-control" />
-                    <span asp-validation-for="Fecha" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>*@
-
-
 @*Ventana modal-películas*@
 <div class="modal fade" id="modal-pelicula" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -122,23 +87,12 @@
 
 
 <div id="transaccion">
-    @*<div class="modal-dialog modal-lg" style=" width 900px !important;">*@
-    @*  <div class="modal-content">*@
     <form id="Transaccion">
-        @*<div class="modal-body">*@
+
         @*Cabecera Detalle*@
         <h5 style="color:#ff6347">Películas</h5>
         <hr />
         <div class="form-horizontal">
-            @*  <input type="hidden" id="CodUsuario" />*@
-            @*<div class="form-group">
-                    <label class="control-label col-md-2">
-                        Usuario
-                    </label>
-                    <div class="col-md-4">
-                        <input type="text" id="name" name="name" placeholder="Usuario" class="form-control" />
-                    </div>
-                </div>*@
 
             <div class="form-group col-md-4">
                 <label class="control-label">Usuario</label>
@@ -180,33 +134,13 @@
                         <option value="0">Precio Alquiler</option>
                     </select>
 
-                    @* <input type="number" id="precio" name="precio" placeholder="Precio" readonly class="form-control" />*@
                 </div>
                 <div class="col-md-4">
                     <label class="control-label">Total a pagar:</label>
                     <input type="number" id="total" name="total" placeholder="Total" readonly class="form-control" />
                     <label id="total2" name="total2"></label>
                 </div>
-                @*<div class="col-md-4">
-                            <input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />
-                        </div>
-                        <label class="control-label col-md-2">
-                            Price
-                        </label>
-                        <div class="col-md-4">
-                            <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" />
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-md-2">
-                            Quantity
-                        </label>
-                        <div class="col-md-4">
-                            <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
-                        </div>
-
-                    </div>*@
                 <div class="col-md-2">
                     <a id="addToList" class="btn btn-primary">Agregar</a>
                 </div>
@@ -217,9 +151,7 @@
                         <tr>
                             <th style="width:20%">Cod.Película</th>
                             <th style="width:30%">Película</th>
-                            @*<th style="width:10%">Qty</th>*@
                             <th style="width:25%">Precio</th>
-                            @*<th style="width:25%">Amount</th>*@
                             <th style="width:10%"></th>
                         </tr>
                     </thead>
@@ -229,7 +161,6 @@
             @*  *@
         </div>
         <div class="modal-footer">
-            @*<button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>*@
             <button id="guardarTransaccion" name="guardarTransaccion" type="submit" class="btn btn-danger">Guardar</button>
         </div>
     </form>

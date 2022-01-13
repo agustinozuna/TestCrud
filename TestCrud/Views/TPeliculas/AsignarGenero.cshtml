@@ -3,41 +3,6 @@
     ViewBag.Title = "AsignarGenero";
 }
 
-@*@foreach (var item in Model.TGeneroPelicula)
-    {
-        <p>@item.CodGeneroNavigation.TxtDesc</p>
-    }*@
-
-
-
-@*<form asp-action="AsignarGenero" id="form" enctype="multipart/form-data">
-    
-
-    @Html.DropDownList("CodGenero", null, htmlAttributes: new { @class = "form-control", Name = "CodGenero" })
-
- <div class="input-group">
-        <select class="form-control" asp-for="TGeneroPelicula" asp-items="ViewBag.CodGenero">
-        </select>
-        <span class="input-group-btn" style="padding-left:5px">
-            <button type="button" class="btn btn-secondary" id="btn"><i class="fas fa-search"></i></button>
-        </span>
-    </div>
-
-
-
-<div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </form>*@
-
-
-
-
-
-
-
 <h3>@Html.DisplayFor(model => model.TxtDesc)- Géneros ya asignados:</h3>
 @using (Html.BeginForm())
 {
