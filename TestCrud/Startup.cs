@@ -30,24 +30,9 @@ namespace TestCrud
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(o => o.LoginPath = new PathString("/Login"));
 
-
-            //services.AddDbContext(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-
             services.AddDbContext<TestCrudContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddDbContext<TestCrudContext>(options => op);
-            //services.AddControllersWithViews()
-            //.AddNewtonsoftJson(options =>
-            // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            //);
-            services
-    .AddMvc(options =>
-    {
-        options.InputFormatters.Insert(0, new RawJsonBodyInputFormatter());
-    });
 
             services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
