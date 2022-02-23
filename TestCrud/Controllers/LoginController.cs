@@ -41,7 +41,7 @@ namespace TestCrud.Controllers
                 //Validación del usuario por username y contrasenha.
                 bool IsValidUser = _context.TUsers
                .Any(u => u.TxtUser.ToLower() == user
-               .TxtUser.ToLower() && user
+               .TxtUser.ToLower() && u
                .TxtPassword == user.TxtPassword);
                 if (IsValidUser)
                 {
